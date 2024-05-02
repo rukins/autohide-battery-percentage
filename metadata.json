@@ -6,7 +6,6 @@
     "url": "https://github.com/rukins/autohide-battery-percentage",
     "gettext-domain": "autohide-battery-percentage@rukins.github.io",
     "settings-schema": "org.gnome.shell.extensions.autohide-battery-percentage",
-    "session-modes": ["user"],
     "donations": {
         "github": "rukins"
     },
