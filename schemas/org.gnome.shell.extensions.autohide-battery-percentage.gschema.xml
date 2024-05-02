@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+
+    <schema id="org.gnome.shell.extensions.autohide-battery-percentage" 
+            path="/org/gnome/shell/extensions/autohide-battery-percentage/">
+
+        <key type="i" name="hide-on-battery-level">
+            <default>80</default>
+            <summary>Hide battery percentage when battery level is above</summary>
+        </key>
+
+        <key type="b" name="hide-on-plugged-in">
+            <default>true</default>
+            <summary>Hide battery percentage when computer is plugged in</summary>
+        </key>
+
+        <key type="b" name="hide-on-power-saving-disabled">
+            <default>false</default>
+            <summary>Hide battery percentage when power saving is disabled</summary>
+        </key>
+
+    </schema>
+
+</schemalist>
