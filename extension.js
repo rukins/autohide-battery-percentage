@@ -32,6 +32,7 @@ export default class AutohideBatteryPercentageExtension extends Extension {
     #powerSupplyProxy = null;
     #batteryProxy = null;
 
+    #settingsChangedSignalId = null;
     #powerProfileChangedSignalId = null;
     #powerSupplyChangedSingalId = null;
     #batteryChangedSingalId = null;
@@ -91,7 +92,8 @@ export default class AutohideBatteryPercentageExtension extends Extension {
             }
         );
 
-        this.#settings.connect("changed", this.#onSettingsChanged.bind(this));
+        this.#settingsChangedSignalId = this.#settings.connect("changed", this.#onSettingsChanged.bind(this));
+    
         this.#powerProfileChangedSignalId = this.#powerProfileMonitor.connect(
             NOTIFY_POWER_SAVER_ENABLED_SIGNAL, this.#update.bind(this)
         );
@@ -100,6 +102,10 @@ export default class AutohideBatteryPercentageExtension extends Extension {
     }
 
     disable() {
+        if (this.#settingsChangedSignalId) {
+            this.#settings.disconnect(this.#settingsChangedSignalId);
+            this.#settingsChangedSignalId = null;
+        }
         if (this.#batteryChangedSingalId) {
             this.#batteryProxy.disconnect(this.#batteryChangedSingalId);
             this.#batteryChangedSingalId = null;
@@ -112,6 +118,15 @@ export default class AutohideBatteryPercentageExtension extends Extension {
             this.#powerProfileMonitor.disconnect(this.#powerProfileChangedSignalId);
             this.#powerProfileChangedSignalId = null;
         }
+
+        this.#settings = null;
+        this.#settingsCache = {};
+
+        this.#desktopInterface = null;
+        this.#powerProfileMonitor = null;
+
+        this.#powerSupplyProxy = null;
+        this.#batteryProxy = null;
     }
 
     #onSettingsChanged(settings, changed) {
