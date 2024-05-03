@@ -6,7 +6,7 @@ import UPowerGlib from 'gi://UPowerGlib';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import { Extension } from 'resource:///org/gnome/shell/extensions/extension.js';
 
-import * as FileUtils from "./utils/fileUtils.js"
+import * as FileUtils from "./fileUtils.js"
 
 
 const G_PROPERTIES_CHANGED_SIGNAL = "g-properties-changed";
@@ -50,7 +50,7 @@ export default class AutohideBatteryPercentageExtension extends Extension {
         // https://gitlab.gnome.org/GNOME/gjs/-/blob/master/modules/core/overrides/Gio.js
         const UPowerDeviceProxyWrapper = Gio.DBusProxy.makeProxyWrapper(
             FileUtils.loadXML(
-                UPOWER_DEVICE_INTERFACE, GLib.build_filenamev([this.metadata.path, "resources", "interfaces"])
+                UPOWER_DEVICE_INTERFACE, GLib.build_filenamev([this.metadata.path])
             )
         );
 
