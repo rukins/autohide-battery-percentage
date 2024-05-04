@@ -10,7 +10,10 @@ if the computer is plugged in or power saving is on.
 Inspired by [Autohide Battery](https://github.com/ai/autohide-battery)
 
 ## Install
-The extension is available on [Autohide Battery Percentage](https://extensions.gnome.org/extension/6943/autohide-battery-percentage/) page.
+The extension is available on [Autohide Battery Percentage](https://extensions.gnome.org/extension/6943/autohide-battery-percentage/) page
+
+## Translations
+You can help the project with translating strings into your language [on Weblate](https://hosted.weblate.org/engage/autohide-battery-percentage)
 
 ## Report Issues
 In the [Issues](https://github.com/rukins/autohide-battery-percentage/issues) section you can suggest any improvements and report any bugs you find
