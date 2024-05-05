@@ -1,0 +1,33 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-05-02 22:42+0500\n"
+"PO-Revision-Date: 2024-05-05 11:49+0000\n"
+"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
+"Language-Team: Turkish <https://hosted.weblate.org/projects/"
+"autohide-battery-percentage/autohide-battery-percentagerukins-github-io-pot/"
+"tr/>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.5.3\n"
+
+#: prefs.js:25
+msgid "Hide on battery level above"
+msgstr "Pil yüzdesi değerin üstündeyse gizle"
+
+#: prefs.js:36
+msgid "Hide on plugged in"
+msgstr "Fişe takılıyken gizle"
+
+#: prefs.js:42
+msgid "Hide on power saving disabled"
+msgstr "Güç tutumu devre dışı bırakılınca gizle"
