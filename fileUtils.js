@@ -12,7 +12,7 @@ export function loadXML(interfaceName, folderAbsolutePath) {
     try {
         let [ok_, bytes] = file.load_contents(null);
 
-        return imports.byteArray.toString(bytes);
+        return new TextDecoder().decode(bytes);
     } catch (e) {
         log(`Failed to load interface ${interfaceName}`);
     }
