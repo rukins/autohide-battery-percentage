@@ -23,29 +23,29 @@ const SHOW_BATTERY_PERCENTAGE_PROPERTY = "show-battery-percentage";
 
 export default class AutohideBatteryPercentageExtension extends Extension {
 
-    #settings = null;
-    #settingsCache = {};
+    _settings = null;
+    _settingsCache = {};
 
-    #desktopInterface = null;
-    #powerProfileMonitor = null;
+    _desktopInterface = null;
+    _powerProfileMonitor = null;
 
-    #powerSupplyProxy = null;
-    #batteryProxy = null;
+    _powerSupplyProxy = null;
+    _batteryProxy = null;
 
-    #settingsChangedSignalId = null;
-    #powerProfileChangedSignalId = null;
-    #powerSupplyChangedSingalId = null;
-    #batteryChangedSingalId = null;
+    _settingsChangedSignalId = null;
+    _powerProfileChangedSignalId = null;
+    _powerSupplyChangedSingalId = null;
+    _batteryChangedSingalId = null;
 
     constructor(metadata) {
         super(metadata);
     }
 
     async enable() {
-        this.#settings = this.getSettings();
+        this._settings = this.getSettings();
 
-        this.#desktopInterface = this.getSettings(DESKTOP_INTERFACE_SETTINGS);
-        this.#powerProfileMonitor = Gio.PowerProfileMonitor.dup_default();
+        this._desktopInterface = this.getSettings(DESKTOP_INTERFACE_SETTINGS);
+        this._powerProfileMonitor = Gio.PowerProfileMonitor.dup_default();
 
         // https://gitlab.gnome.org/GNOME/gjs/-/blob/master/modules/core/overrides/Gio.js
         const UPowerDeviceProxyWrapper = Gio.DBusProxy.makeProxyWrapper(
@@ -60,11 +60,11 @@ export default class AutohideBatteryPercentageExtension extends Extension {
             BATTERY_BAT1_OBJECT_PATH
         ).then(
             proxy => {
-                this.#batteryProxy = proxy;
+                this._batteryProxy = proxy;
 
-                this.#batteryChangedSingalId = proxy.connect(
+                this._batteryChangedSingalId = proxy.connect(
                     G_PROPERTIES_CHANGED_SIGNAL,
-                    this.#update.bind(this)
+                    this._update.bind(this)
                 );
             }
         ).catch(
@@ -79,11 +79,11 @@ export default class AutohideBatteryPercentageExtension extends Extension {
             LINE_POWER_ACAD_OBJECT_PATH
         ).then(
             proxy => {
-                this.#powerSupplyProxy = proxy;
+                this._powerSupplyProxy = proxy;
 
-                this.#powerSupplyChangedSingalId = proxy.connect(
+                this._powerSupplyChangedSingalId = proxy.connect(
                     G_PROPERTIES_CHANGED_SIGNAL,
-                    this.#update.bind(this)
+                    this._update.bind(this)
                 );
             }
         ).catch(
@@ -92,89 +92,89 @@ export default class AutohideBatteryPercentageExtension extends Extension {
             }
         );
 
-        this.#settingsChangedSignalId = this.#settings.connect("changed", this.#onSettingsChanged.bind(this));
+        this._settingsChangedSignalId = this._settings.connect("changed", this._onSettingsChanged.bind(this));
     
-        this.#powerProfileChangedSignalId = this.#powerProfileMonitor.connect(
-            NOTIFY_POWER_SAVER_ENABLED_SIGNAL, this.#update.bind(this)
+        this._powerProfileChangedSignalId = this._powerProfileMonitor.connect(
+            NOTIFY_POWER_SAVER_ENABLED_SIGNAL, this._update.bind(this)
         );
 
-        this.#onSettingsChanged(this.#settings, null);
+        this._onSettingsChanged(this._settings, null);
     }
 
     disable() {
-        if (this.#settingsChangedSignalId) {
-            this.#settings.disconnect(this.#settingsChangedSignalId);
-            this.#settingsChangedSignalId = null;
+        if (this._settingsChangedSignalId) {
+            this._settings.disconnect(this._settingsChangedSignalId);
+            this._settingsChangedSignalId = null;
         }
-        if (this.#batteryChangedSingalId) {
-            this.#batteryProxy.disconnect(this.#batteryChangedSingalId);
-            this.#batteryChangedSingalId = null;
+        if (this._batteryChangedSingalId) {
+            this._batteryProxy.disconnect(this._batteryChangedSingalId);
+            this._batteryChangedSingalId = null;
         }
-        if (this.#powerSupplyChangedSingalId) {
-            this.#powerSupplyProxy.disconnect(this.#powerSupplyChangedSingalId);
-            this.#powerSupplyChangedSingalId = null;
+        if (this._powerSupplyChangedSingalId) {
+            this._powerSupplyProxy.disconnect(this._powerSupplyChangedSingalId);
+            this._powerSupplyChangedSingalId = null;
         }
-        if (this.#powerProfileChangedSignalId) {
-            this.#powerProfileMonitor.disconnect(this.#powerProfileChangedSignalId);
-            this.#powerProfileChangedSignalId = null;
+        if (this._powerProfileChangedSignalId) {
+            this._powerProfileMonitor.disconnect(this._powerProfileChangedSignalId);
+            this._powerProfileChangedSignalId = null;
         }
 
-        this.#settings = null;
-        this.#settingsCache = {};
+        this._settings = null;
+        this._settingsCache = {};
 
-        this.#desktopInterface = null;
-        this.#powerProfileMonitor = null;
+        this._desktopInterface = null;
+        this._powerProfileMonitor = null;
 
-        this.#powerSupplyProxy = null;
-        this.#batteryProxy = null;
+        this._powerSupplyProxy = null;
+        this._batteryProxy = null;
     }
 
-    #onSettingsChanged(settings, changed) {
-        this.#settingsCache = {
+    _onSettingsChanged(settings, changed) {
+        this._settingsCache = {
             hideOnBatteryLevel: settings.get_int("hide-on-battery-level"),
             hideOnPowerSavingDisabled: settings.get_boolean("hide-on-power-saving-disabled"),
             hideOnPluggedIn: settings.get_boolean("hide-on-plugged-in")
         }
 
-        this.#update();
+        this._update();
     }
 
-    #update() {
+    _update() {
         let showBatteryPercentage = true;
 
-        if (this.#hideOnBatteryLevel(this.#batteryProxy) 
-            || this.#hideOnPluggedIn(this.#powerSupplyProxy) 
-            || this.#hideOnPowerSavingDisabled(this.#powerProfileMonitor)) {
+        if (this._hideOnBatteryLevel(this._batteryProxy) 
+            || this._hideOnPluggedIn(this._powerSupplyProxy) 
+            || this._hideOnPowerSavingDisabled(this._powerProfileMonitor)) {
             showBatteryPercentage = false;
         }
 
-        this.#setShowBatteryPercentage(showBatteryPercentage);
+        this._setShowBatteryPercentage(showBatteryPercentage);
     }
 
-    #hideOnPowerSavingDisabled(powerProfileMonitor) {
+    _hideOnPowerSavingDisabled(powerProfileMonitor) {
         if (!powerProfileMonitor) return false;
 
-        return this.#settingsCache.hideOnPowerSavingDisabled && !powerProfileMonitor.get_power_saver_enabled();
+        return this._settingsCache.hideOnPowerSavingDisabled && !powerProfileMonitor.get_power_saver_enabled();
     }
 
-    #hideOnPluggedIn(proxy) {
+    _hideOnPluggedIn(proxy) {
         if (!proxy || proxy.Type !== UPowerGlib.DeviceKind.LINE_POWER) return false;
 
-        return this.#settingsCache.hideOnPluggedIn && proxy.Online;
+        return this._settingsCache.hideOnPluggedIn && proxy.Online;
     }
 
-    #hideOnBatteryLevel(proxy) {
+    _hideOnBatteryLevel(proxy) {
         if (!proxy || proxy.Type !== UPowerGlib.DeviceKind.BATTERY) return false;
 
-        return proxy.Percentage >= this.#settingsCache.hideOnBatteryLevel;
+        return proxy.Percentage >= this._settingsCache.hideOnBatteryLevel;
     }
 
-    #setShowBatteryPercentage(value) {
-        if (this.#desktopInterface.get_boolean(SHOW_BATTERY_PERCENTAGE_PROPERTY) === value) {
+    _setShowBatteryPercentage(value) {
+        if (this._desktopInterface.get_boolean(SHOW_BATTERY_PERCENTAGE_PROPERTY) === value) {
             return;
         }
 
-        this.#desktopInterface.set_boolean(SHOW_BATTERY_PERCENTAGE_PROPERTY, value);
+        this._desktopInterface.set_boolean(SHOW_BATTERY_PERCENTAGE_PROPERTY, value);
     }
 
 }
