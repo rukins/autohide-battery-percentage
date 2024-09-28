@@ -2,7 +2,7 @@
     "uuid": "autohide-battery-percentage@rukins.github.io",
     "name": "Autohide Battery Percentage",
     "description": "GNOME Shell extension to hide the battery percentage in the top panel, if the computer is plugged in or power saving is disabled",
-    "shell-version": ["45", "46"],
+    "shell-version": ["45", "46", "47"],
     "url": "https://github.com/rukins/autohide-battery-percentage",
     "gettext-domain": "autohide-battery-percentage@rukins.github.io",
     "settings-schema": "org.gnome.shell.extensions.autohide-battery-percentage",
