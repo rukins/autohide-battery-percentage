@@ -15,6 +15,10 @@ The extension is available on [Autohide Battery Percentage](https://extensions.g
 ## Translations
 You can help the project with translating strings into your language [on Weblate](https://hosted.weblate.org/engage/autohide-battery-percentage)
 
+<a href="https://hosted.weblate.org/engage/autohide-battery-percentage/">
+<img src="https://hosted.weblate.org/widget/autohide-battery-percentage/287x66-black.png" alt="Translation status" />
+</a>
+
 ## Report Issues
 In the [Issues](https://github.com/rukins/autohide-battery-percentage/issues) section you can suggest any improvements and report any bugs you find
 
