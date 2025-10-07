@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-02 22:42+0500\n"
-"PO-Revision-Date: 2025-10-06 04:37+0000\n"
+"PO-Revision-Date: 2025-10-07 06:01+0000\n"
 "Last-Translator: Thiago Carmona <Thiago_Carmona@tuta.io>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "autohide-battery-percentage/autohide-battery-percentagerukins-github-io-pot/"
@@ -26,7 +26,7 @@ msgstr "Esconder no nível de bateria acima"
 
 #: prefs.js:36
 msgid "Hide on plugged in"
-msgstr "Esconder quando estiver plugado"
+msgstr "Esconder quando estiver conectado à tomada"
 
 #: prefs.js:42
 msgid "Hide on power saving disabled"
