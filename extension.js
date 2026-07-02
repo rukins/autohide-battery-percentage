@@ -49,7 +49,7 @@ export default class AutohideBatteryPercentageExtension extends Extension {
 
         // https://gitlab.gnome.org/GNOME/gjs/-/blob/master/modules/core/overrides/Gio.js
         const UPowerDeviceProxyWrapper = Gio.DBusProxy.makeProxyWrapper(
-            FileUtils.loadXML(
+            await FileUtils.loadXML(
                 UPOWER_DEVICE_INTERFACE, GLib.build_filenamev([this.metadata.path])
             )
         );
